@@ -1,0 +1,171 @@
+input.search {
+    border: solid white;
+    background: transparent;
+    border-radius: 28px;
+    width: 100%;
+    height: 52px;
+    padding: 19px;
+    color: white;
+}
+.hero-cta {
+    margin-top: 14px;
+}
+
+.hero-cta a{
+    border-radius: 10px;
+}
+
+
+.searchPageHeader {
+    display: inline-flex;
+}
+img {
+    margin: 10px;
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+}
+
+a.button.button-primary.top-search-button {
+    /* float: right !important; */
+    position: absolute;
+    right: 0;
+    z-index: 999 !important;
+}
+
+a.button.button-primary.top-search-button {
+    /* float: right !important; */
+    position: absolute;
+    right: 0;
+    top: 2px;
+    z-index: 999 !important;
+}
+
+input.search-top {
+    border: solid white;
+    background: transparent;
+    border-radius: 28px;
+    width: 41.5rem;
+    height: 52px;
+    padding: 19px;
+    color: white;
+}
+
+
+
+
+#demo {
+    height:100%;
+    position:relative;
+    overflow:hidden;
+  }
+  
+  
+  .green{
+    background-color:#6fb936;
+  }
+          .thumb{
+              margin-bottom: 30px;
+          }
+          
+          .page-top{
+              margin-top:85px;
+          }
+  
+     
+  img.zoom {
+      width: 100%;
+      height: 200px;
+      border-radius:5px;
+      object-fit:cover;
+      -webkit-transition: all .3s ease-in-out;
+      -moz-transition: all .3s ease-in-out;
+      -o-transition: all .3s ease-in-out;
+      -ms-transition: all .3s ease-in-out;
+  }
+          
+   
+  .transition {
+      -webkit-transform: scale(1.2); 
+      -moz-transform: scale(1.2);
+      -o-transform: scale(1.2);
+      transform: scale(1.2);
+  }
+      .modal-header {
+     
+       border-bottom: none;
+  }
+      .modal-title {
+          color:#000;
+      }
+      .modal-footer{
+        display:none;  
+      }
+  
+
+    .modal-content {
+    background-color: #22242c !important;
+    color: white !important;
+}
+
+.modal-title {
+    color: white !important;
+}    
+
+input#formFileLg {
+    height: 44px !important;
+    background: #22242c;
+    color: white;
+}
+
+p.hero-paragraph {
+    color: white !important;
+}
+
+/* responsive */
+@media (max-width: 768px) {
+    .searchPageHeader {
+        display: block;
+    }
+    .searchPageHeader img {
+        margin: 0;
+    }
+    .searchPageHeader input {
+        width: 100%;
+    }
+    .searchPageHeader a {
+        position: relative;
+        top: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .searchPageHeader input {
+        width: 128%;
+    }
+
+    a.button.button-primary.top-search-button {
+        width: 100%;
+        float: right !important;
+        position: absolute;
+        top: 102px;
+        top: 102px;
+        z-index: 999 !important;
+    }
+}
+
+@media (max-width: 375px) {
+    .searchPageHeader input {
+        width: 107%;
+    }
+
+    a.button.button-primary.top-search-button {
+        width: 100%;
+        float: right !important;
+        position: absolute;
+        top: 102px;
+        top: 102px;
+        z-index: 999 !important;
+    }
+}
+

@@ -103,4 +103,4 @@ def hamming_distance(hash1, hash2):
 def get_similar_images(all_blocks, subject_block):
 
     for block in all_blocks:
-        
+        pass        
