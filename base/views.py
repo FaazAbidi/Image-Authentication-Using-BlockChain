@@ -63,7 +63,7 @@ def authenticateImage(request):
             new_block.save()
             
             # print(new_block.id)
-            return redirect('results/'+str(new_block.id))
+            return redirect('similarity', pk = new_block.id)
     else:
         form = BlockForm()
         
