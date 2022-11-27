@@ -1,0 +1,8 @@
+{% comment %} show image {% endcomment %}
+<h1> Name: {{ block.image_name }} </h1>
+<h3> Description: {{ block.image_description }} </h3>
+<h4> Authenticated on: {{ block.timestamp }} </h4>
+
+<img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"   class="img-responsive"/>
+
+{% comment %} show image {% endcomment %}

@@ -1,0 +1,18 @@
+<h1>Home Page</h1>
+
+<h3> Total Images Count: {{ image_count }} </h3>
+<h3> All Authenticated Images: </h3>
+
+<ul>
+
+{% for block in images %}
+
+
+<p> Name: {{ block.image_name }} </p>
+<p> Description: {{ block.image_description }} </p>
+<p> Authenticated on: {{ block.timestamp }} </p>
+<img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"   class="img-responsive"/>
+
+</br>
+
+{% endfor %}
