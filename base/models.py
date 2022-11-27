@@ -16,7 +16,11 @@ class Block(models.Model):
     image_url = models.ImageField() 
     image_name = models.CharField(max_length=200)
     image_description = models.CharField(max_length=200, default="No description")
-    d_hash = models.CharField(max_length=200)
+    average_hash = models.CharField(max_length=64)
+    phash = models.CharField(max_length=64)
+    dhash = models.CharField(max_length=64)
+    whash = models.CharField(max_length=64)
+    colorhash = models.CharField(max_length=64)
     
 
 class BlockChain(models.Model):

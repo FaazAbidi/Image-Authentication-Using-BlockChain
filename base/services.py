@@ -3,6 +3,8 @@ import base64
 import cv2 as cv
 import numpy as np
 import hashlib
+import imagehash
+from PIL import Image
 
 IMAGE_HOSTING_SERVICE_KEY =  "55d947aa16c695bc4e464c91a79f48b6"
 
@@ -42,28 +44,21 @@ def image_d_hash(image_data):
         image_base64 = image_base64.decode('utf-8')
             
         image = cv.imdecode(np.frombuffer(base64.b64decode(image_base64), np.uint8), cv.IMREAD_COLOR)
+        image = Image.fromarray(image)
         
-        hashSize = 8
-        # converting to the grayscale
-        image = cv.cvtColor(image, cv.COLOR_BGR2GRAY)
-        # resize the input image, adding a single column (width) so we
-        # can compute the horizontal gradient
-        resized = cv.resize(image, (hashSize + 1, hashSize))
-        # compute the (relative) horizontal gradient between adjacent
-        # column pixels
-        diff = resized[:, 1:] > resized[:, :-1]
-
-        binary = np.zeros((hashSize, hashSize), dtype="uint8")
-        for i in range(diff.shape[0]):
-            for j in range(diff.shape[1]):
-                if diff[i][j]:
-                    binary[i][j] = 255
-                else:
-                    binary[i][j] = 0
+        average_hash = str(imagehash.average_hash(image))
+        phash =  str(imagehash.phash(image))
+        dhash = str(imagehash.dhash(image))
+        whash = str(imagehash.whash(image))
+        colorhash = str(imagehash.colorhash(image)) 
         
-        decimal_binary =  sum([2 ** i for (i, v) in enumerate(diff.flatten()) if v])
-        
-        return str(decimal_binary)
+        return {
+            "average_hash" : average_hash,
+            "phash" : phash,
+            "dhash" : dhash,
+            "whash" : whash,
+            "colorhash" : colorhash
+        }
     
 
 def proof_of_work(previous_proof):
@@ -103,3 +98,9 @@ def hamming_distance(hash1, hash2):
             count += 1
         i += 1
     return count
+
+
+def get_similar_images(all_blocks, subject_block):
+
+    for block in all_blocks:
+        
