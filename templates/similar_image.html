@@ -10,13 +10,14 @@
 </br>
 
 <h4> Similar Images: </h4>
-{% for similar_image in similar_blocks %}
+{% for similar_image, scores in similar_blocks %}
     <h4> Name: {{ similar_image.image_name }} </h4>
     <h4> Description: {{ similar_image.image_description }} </h4>
     <h4> Authenticated on: {{ similar_image.timestamp }} </h4>
     <h4> Hash: {{ similar_image.current_hash }} </h3>
     <h4> DHash: {{ similar_image.dhash }} </h4>
     <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
+<<<<<<< Updated upstream
     {% comment %} <h4> Similarity Score: {{ similar_image }} </h4> {% endcomment %}
 {% endfor %} -->
 
@@ -342,3 +343,7 @@
     <script src="{% static 'dist/js/main.min.js' %}"></script>
 </body>
 </html>
+=======
+    <h4> Similarity Score: {{ scores}} </h4>
+{% endfor %}
+>>>>>>> Stashed changes

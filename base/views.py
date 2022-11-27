@@ -1,11 +1,17 @@
 import os
 from django.shortcuts import render, redirect
+from django.template.defaulttags import register
 from django.http import HttpResponse
 from . models import BlockForm, Block, BlockChain
 from django.db.models import Q
-from . services import hamming_distance, host_image, image_d_hash, proof_of_work, final_hash_generate
+from . services import get_similar_blocks, host_image, image_hashes, proof_of_work, final_hash_generate
 
 # Create your views here.
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)
+
 
 def home(request):
     
@@ -39,7 +45,7 @@ def authenticateImage(request):
             img_name = form.cleaned_data['image_name']
             img_desc = form.cleaned_data['image_description']
             img_url = form.files['image_url']            
-            current_hashes = image_d_hash(img_url)
+            current_hashes = image_hashes(img_url)
             current_proof = proof_of_work(last_block_proof)
             
             final_hash = final_hash_generate(str(last_block_hash), str(current_hashes['dhash']), str(current_proof))
@@ -86,9 +92,9 @@ def get_similar_results(request, pk):
     block = Block.objects.get(id=pk)
     d_hash = block.dhash
     
-    all_images = Block.objects.all().filter(~Q(id=pk))
-    final = []
-            
+    all_blocks = Block.objects.all().filter(~Q(id=pk))
+    final = get_similar_blocks(all_blocks, block)
+    
     context = {
         'block' : block,
         'similar_blocks' : final,

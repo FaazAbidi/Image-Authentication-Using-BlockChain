@@ -6,6 +6,8 @@ import hashlib
 import imagehash
 from PIL import Image
 
+from base.models import Block
+
 IMAGE_HOSTING_SERVICE_KEY =  "55d947aa16c695bc4e464c91a79f48b6"
 
 
@@ -36,7 +38,7 @@ def host_image(image_data):
     return image_url
 
 
-def image_d_hash(image_data):
+def image_hashes(image_data):
         
         image_file = image_data.open("rb")
         image_bytes = image_file.read()
@@ -100,7 +102,39 @@ def hamming_distance(hash1, hash2):
     return count
 
 
-def get_similar_images(all_blocks, subject_block):
-
+def get_similar_blocks(all_blocks, subject_block):
+    
+    similar_blocks = [] 
+    
     for block in all_blocks:
+<<<<<<< Updated upstream
         pass        
+=======
+        
+        average_hash_simm_percent = (1-(hamming_distance(block.average_hash, subject_block.average_hash) / len(subject_block.average_hash))) * 100
+        dhash_simm_percent = (1-(hamming_distance(block.dhash, subject_block.dhash) / len(subject_block.dhash))) * 100
+        phash_simm_percent = (1-(hamming_distance(block.phash, subject_block.phash) / len(subject_block.phash))) * 100
+        whash_simm_percent = (1-(hamming_distance(block.whash, subject_block.whash) / len(subject_block.whash))) * 100
+        colorhash_simm_percent = (1-(hamming_distance(block.colorhash, subject_block.colorhash) / len(subject_block.colorhash))) * 100
+        
+        cummulative = round(((average_hash_simm_percent+phash_simm_percent+dhash_simm_percent+whash_simm_percent+colorhash_simm_percent)/500)*100, 2)
+        
+        similarities_percent = {
+            "average_hash" : round(average_hash_simm_percent, 2),
+            "phash" : round(phash_simm_percent, 2),
+            "dhash" : round(dhash_simm_percent, 2),
+            "whash" : round(whash_simm_percent, 2),
+            "colorhash" : round(colorhash_simm_percent, 2),
+            'cummulative' : cummulative
+        }
+        
+        similar_blocks.append((block, similarities_percent,))
+        
+    similar_blocks.sort(key=lambda x: x[1]["cummulative"], reverse=True)
+    
+    return similar_blocks
+        
+        
+        
+        
+>>>>>>> Stashed changes
