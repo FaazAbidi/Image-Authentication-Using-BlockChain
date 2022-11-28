@@ -7,5 +7,7 @@ urlpatterns = [
     path('success/', views.upload_success, name="success"),
     path('image/<str:pk>/', views.image_page, name="image"),
     path('results/<str:pk>/', views.get_similar_results, name="similarity"),
+    path('chain/', views.chain, name="chain"),
+    path('search/', views.search, name="search"),
 ]
  

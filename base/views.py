@@ -104,4 +104,49 @@ def get_similar_results(request, pk):
 
 def chain(request):
     
-    all_blocks = Block.objects.all()
+    all_blocks = all_blocks = Block.objects.all().order_by('-timestamp')
+    
+    context = {
+        "all_blocks" : all_blocks
+    }
+    
+    return render(request, 'chain.html', context)
+
+
+def search(request):
+    
+    query = request.GET.get('q') if request.GET.get('q') != None else ''
+    type = int(request.GET.get('type')) if request.GET.get('type') != None else -1
+    
+    # type 0 is keyword search
+    if type == 0:
+        all_blocks = Block.objects.all().filter(Q(image_name__icontains=query) | Q(image_description__icontains=query))
+    # type 1 is dhash search
+    elif type == 1:
+        all_blocks = Block.objects.all().filter(Q(dhash__icontains=query))
+    #type 2 is average_hash search
+    elif type == 2:
+        all_blocks = Block.objects.all().filter(Q(average_hash__icontains=query))
+    # type 3 is phash search
+    elif type == 3:
+        all_blocks = Block.objects.all().filter(Q(phash__icontains=query))
+    # type 4 is whash
+    elif type == 4:
+        all_blocks = Block.objects.all().filter(Q(whash__icontains=query))
+    # type 5 is colorhash
+    elif type == 5:
+        all_blocks = Block.objects.all().filter(Q(whash__icontains=query))    
+    else:
+        all_blocks = []
+        
+    print(type, query)
+    print(all_blocks)
+    
+    context = {
+            "query" : query,
+            "result_count" : len(all_blocks),
+            "all_blocks" : all_blocks
+        }
+    
+    return render(request, 'searchpage.html', context)
+    
