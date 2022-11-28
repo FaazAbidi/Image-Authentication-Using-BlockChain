@@ -56,7 +56,7 @@
                             <form class="mainpageFrom" action="">
                                 <input class="search-top" type="text" placeholder="Search here..." required>
                               </form>   
-                            <div class="hero-cta"><a class="button button-primary top-search-button" href="#">Search</a>
+                            <div class="hero-cta"><a class="button button-primary top-search-button" href="{% url 'home'%}">Search</a>
                                 
                             </div>
                         </div>
@@ -147,7 +147,9 @@
                                             <h4> Authenticated on: {{ similar_image.timestamp }} </h4>
                                             <h4> Hash: {{ similar_image.current_hash }} </h3>
                                             <h4> DHash: {{  similar_image.dhash }} </h4>
+                                            <a href="{% url 'similarity' pk=similar_image.id %}">
                                             <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
+                                            </a>
                                             {% comment %} <h4> Similarity Score: {{ similar_image }} </h4> {% endcomment %}
                                         </div>
                                         <div class="modal-footer">
