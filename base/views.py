@@ -100,3 +100,8 @@ def get_similar_results(request, pk):
     }
     
     return render(request, 'similar_image.html', context)
+
+
+def chain(request):
+    
+    all_blocks = Block.objects.all()
