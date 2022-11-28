@@ -73,11 +73,39 @@
                         <div class="hero-inner">
                             <div class="hero-copy">
                                 <h1 class="hero-title mt-0">{{ block.image_name }}</h1>
-                                <p class="hero-paragraph">Name: {{ block.image_name }}</p>
-                                <p class="hero-paragraph">Description: {{ block.image_description }}</p>
-                                <p class="hero-paragraph"> Hash: {{ block.current_hash }} </p>
-                                <p class="hero-paragraph"> DHash: {{ block.dhash }}, <br> Average Hash: {{ block.average_hash }}, <br>  PHash: {{ block.phash }}, <br> Whash: {{ block.whash }}, <br> ColorHash: {{ block.colorhash }} </p>
-                                
+                                <!-- <p class="hero-paragraph">Name: {{ block.image_name }}</p> -->
+                                <p class="hero-paragraph">{{ block.image_description }}</p>
+                                 <p class="hero-paragraph"> Hash: {{ block.current_hash }} </p>
+                                <!--<p class="hero-paragraph"> DHash: {{ block.dhash }}, <br> Average Hash: {{ block.average_hash }}, <br>  PHash: {{ block.phash }}, <br> Whash: {{ block.whash }}, <br> ColorHash: {{ block.colorhash }} </p> -->
+                                <table>
+                                    <tr>
+                                        <td><p class="hero-paragraph"> DHash</p></td>
+                                        <td><p class="hero-paragraph"> {{ block.dhash }}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><p class="hero-paragraph"> Avg Hash</p></td>
+                                        <td><p class="hero-paragraph"> {{ block.average_hash }}</p></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><p class="hero-paragraph"> PHash</p></td>
+                                        <td><p class="hero-paragraph"> {{ block.phash }}</p></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td><p class="hero-paragraph"> WHash</p></td>
+                                        <td><p class="hero-paragraph"> {{ block.whash }}</p></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                        <td><p class="hero-paragraph"> Color Hash</p></td>
+                                        <td><p class="hero-paragraph"> {{ block.colorhash }}</p></td>
+                                    </tr>
+
+                                    
+                                    
+
+                                </table>
                                 
                             </div>
                             <div class="hero-figure anime-element">
@@ -95,8 +123,29 @@
                                 <div class="hero-figure-box hero-figure-box-08" data-rotation="-22deg"></div>
                                 <div class="hero-figure-box hero-figure-box-09" data-rotation="-52deg"></div>
                                 <div class="hero-figure-box hero-figure-box-10" data-rotation="-50deg"></div>
-                                <img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"   class="img-responsive" style="position: absolute;top: 0;right: -143px; width: 100%;"/>
-                                
+                                <a href=""  data-toggle="modal" data-target="#zoom">
+                                    <img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"   class="img-responsive zoom img-fluid " style="position: absolute;top: 0;right: -143px; width: 100%;"/>
+                                </a>
+                                <div class="modal fade" id="zoom" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                          <h5 class="modal-title" id="zoom">{{ similar_image.image_name }}</h5>
+                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                          </button>
+                                        </div>
+                                        <div class="modal-body">
+                                         
+                                            <img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"  class="img-responsive"/>
+                                  
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
                             </div>
                         </div>
                     </div>
@@ -142,11 +191,11 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                          <h4> Name: {{ similar_image.image_name }} </h4>
-                                            <h4> Description: {{ similar_image.image_description }} </h4>
-                                            <h4> Authenticated on: {{ similar_image.timestamp }} </h4>
-                                            <h4> Hash: {{ similar_image.current_hash }} </h3>
-                                            <h4> DHash: {{  similar_image.dhash }} </h4>
+                                          <p> Name: {{ similar_image.image_name }} </p>
+                                            <p> Description: {{ similar_image.image_description }} </p>
+                                            <p> Authenticated on: {{ similar_image.timestamp }} </p>
+                                            <p> Hash: <br> {{ similar_image.current_hash|truncatechars:40 }} </p>
+                                            <p> DHash: {{  similar_image.dhash }} </p>
                                             <a href="{% url 'similarity' pk=similar_image.id %}">
                                             <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
                                             </a>
