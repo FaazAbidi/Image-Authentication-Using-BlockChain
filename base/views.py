@@ -15,7 +15,7 @@ def get_item(dictionary, key):
 
 def home(request):
     
-    all_blocks = Block.objects.all()
+    all_blocks = Block.objects.all().order_by('-timestamp')
     block_count = len(all_blocks)
     
     context = {
@@ -90,7 +90,6 @@ def image_page(request, pk):
 
 def get_similar_results(request, pk):
     block = Block.objects.get(id=pk)
-    d_hash = block.dhash
     
     all_blocks = Block.objects.all().filter(~Q(id=pk))
     final = get_similar_blocks(all_blocks, block)

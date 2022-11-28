@@ -107,9 +107,6 @@ def get_similar_blocks(all_blocks, subject_block):
     similar_blocks = [] 
     
     for block in all_blocks:
-<<<<<<< Updated upstream
-        pass        
-=======
         
         average_hash_simm_percent = (1-(hamming_distance(block.average_hash, subject_block.average_hash) / len(subject_block.average_hash))) * 100
         dhash_simm_percent = (1-(hamming_distance(block.dhash, subject_block.dhash) / len(subject_block.dhash))) * 100
@@ -132,9 +129,9 @@ def get_similar_blocks(all_blocks, subject_block):
         
     similar_blocks.sort(key=lambda x: x[1]["cummulative"], reverse=True)
     
+    print(similar_blocks)
     return similar_blocks
         
         
         
         
->>>>>>> Stashed changes

@@ -17,7 +17,6 @@
     <h4> Hash: {{ similar_image.current_hash }} </h3>
     <h4> DHash: {{ similar_image.dhash }} </h4>
     <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
-<<<<<<< Updated upstream
     {% comment %} <h4> Similarity Score: {{ similar_image }} </h4> {% endcomment %}
 {% endfor %} -->
 
@@ -121,11 +120,16 @@
                                     <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
                                     {% comment %} <h4> Similarity Score: {{ similar_image }} </h4> {% endcomment %}
                                 {% endfor %}  -->
-                                {% for similar_image in similar_blocks %}
+                                {% for similar_image, score in similar_blocks %}
                                 <div class="col-lg-3 col-md-4 col-xs-6 thumb">
                                     <a href="" data-toggle="modal" data-target="#{{similar_image.image_name}}">
-                                        <img  src="https://images.pexels.com/photos/62307/air-bubbles-diving-underwater-blow-62307.jpeg?auto=compress&cs=tinysrgb&h=650&w=940" class="zoom img-fluid "  alt="">
-                                       
+                                        <img  src="{{ similar_image.image_url }}" class="zoom img-fluid "  alt="">
+                                         <p> {% for key, value in score.items %}
+                                            {% if key == "cummulative" %}
+                                                Similarity: {{ value }}%
+                                            {% endif %} </p>
+                                            
+                                        {% endfor %}
                                     </a>
                                 </div>
                                 <div class="modal fade" id="{{similar_image.image_name}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -138,36 +142,25 @@
                                           </button>
                                         </div>
                                         <div class="modal-body">
-                                          <!-- image upload -->
                                           <h4> Name: {{ similar_image.image_name }} </h4>
                                             <h4> Description: {{ similar_image.image_description }} </h4>
                                             <h4> Authenticated on: {{ similar_image.timestamp }} </h4>
                                             <h4> Hash: {{ similar_image.current_hash }} </h3>
-                                            <h4> DHash: {{ similar_image.dhash }} </h4>
+                                            <h4> DHash: {{  similar_image.dhash }} </h4>
                                             <img src="{{ similar_image.image_url }}"   alt = "{{ similar_image.image_name }}"   class="img-responsive"/>
                                             {% comment %} <h4> Similarity Score: {{ similar_image }} </h4> {% endcomment %}
                                         </div>
                                         <div class="modal-footer">
                                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                          
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 {% endfor %}
-
-                                
-                                
-                               
-                               
                            </div>
-                    
-                         
 						</div>
-						
                     </div>
                 </div>
-
             </section>
 
             <!-- <section class="features section">
@@ -343,7 +336,3 @@
     <script src="{% static 'dist/js/main.min.js' %}"></script>
 </body>
 </html>
-=======
-    <h4> Similarity Score: {{ scores}} </h4>
-{% endfor %}
->>>>>>> Stashed changes
