@@ -113,10 +113,16 @@ def chain(request):
     return render(request, 'chain.html', context)
 
 
-def search(request):
+def search(request): 
+    # get id search
+    print(request.GET)
+    if request.method == 'GET':
+        query = request.GET.get('q') if request.GET.get('q') != None else ''
+        type = int(request.GET.get('type')) if request.GET.get('type') != None else -1
+
     
-    query = request.GET.get('q') if request.GET.get('q') != None else ''
-    type = int(request.GET.get('type')) if request.GET.get('type') != None else -1
+    
+
     
     # type 0 is keyword search
     if type == 0:

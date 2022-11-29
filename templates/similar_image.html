@@ -25,6 +25,20 @@
 {% load static %}
 <html lang="en" class="no-js">
 <head>
+
+    <style>
+        .image_upload_type_selection{
+        color: white;
+        background: transparent;
+        border-radius: 19px;
+        padding: 10px;
+        margin-top: 10px;
+        }
+        option {
+        color: black;
+        }
+    </style>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,12 +67,25 @@
                                     <img class="header-logo-image" src="{% static 'dist/images/logo.svg' %}" alt="Logo">
                                 </a>
                             </h1>
-                            <form class="mainpageFrom" action="">
-                                <input class="search-top" type="text" placeholder="Search here..." required>
-                              </form>   
-                            <div class="hero-cta"><a class="button button-primary top-search-button" href="{% url 'home'%}">Search</a>
-                                
-                            </div>
+                            <form class="mainpageFrom" method="GET" action="{% url 'search'%}">
+                                {% csrf_token %}
+                                <input class="search-top" name="q" id="q" type="text" placeholder="Search here..." style="width: 35.5rem !important;" required>
+                                <select class="search image_upload_type_selection" name="type" id="type">
+                                    <option value="0">Keyword</option>
+                                    <option value="1">Dhash</option>
+                                    <option value="2">Average Hash</option>
+                                    <option value="3">pHash</option>
+                                    <option value="4">wHash</option>
+                                    <option value="5">Color Hash</option>
+
+
+                                </select>
+                                <!-- <div class="hero-cta"> <br>
+                                    <a class="button button-primary top-search-button" style="top: 11px !important;" href="#">Search</a>
+                              </form>    -->
+                              <div class="hero-cta"><button class="button button-primary top-search-button" type="submit" type="submit" style="position: absolute;right: -22px;top: 11px;" >Search</button>
+                              </form>
+                            
                         </div>
 
                     </div>
@@ -210,6 +237,13 @@
                     </div>
                 </div>
             </section>
+
+            <a href="{% url 'chain' %}">
+                <img src="{% static 'blockchain.png' %}" alt="" style="position: fixed !important;
+            bottom: 14px;
+            right: 14px;
+            width: 6%;">
+            </a>
 
             <!-- <section class="features section">
                 <div class="container">
