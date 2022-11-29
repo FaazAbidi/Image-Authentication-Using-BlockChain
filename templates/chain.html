@@ -1,11 +1,213 @@
-{% for block in all_blocks %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Block Chain Visualization</title>
+    <style>
+        body {
+            margin: 0 !important;
+        }
+#canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* 2. set appropriate css for the camera vectors */
+#camera-vectors {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: grey;
+  padding: 8px;
+  color: white;
+}
+    </style>
+</head>
+
+<body>
+    <script src="https://unpkg.com/three@0.146.0/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.146.0/examples/js/controls/OrbitControls.js"></script>
+    <script>
+
+        // make an array fir image names
+        var image_names = [];
+        var image_descriptions = [];
+        var image_urls = [];
+
+        // append into image_names
+        {% for block in all_blocks %}
+        image_names.push("{{ block.image_name }}");
+        image_descriptions.push("{{ block.image_description }}");
+        image_urls.push("{{ block.image_url }}");
+        {% endfor %}
+
+        console.log(image_names);
 
 
-<p> Name: {{ block.image_name }} </p>
-<p> Description: {{ block.image_description }} </p>
-<p> Authenticated on: {{ block.timestamp }} </p>
-<img src="{{ block.image_url }}"   alt = "{{ block.image_name }}"   class="img-responsive"/>
 
-</br>
+        const scene = new THREE.Scene();
+        camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 1, 500);
 
-{% endfor %}
+        
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        // move camera with WASD
+        
+        controls.keys = {
+            LEFT: 65, // A
+            UP: 87, // W
+            RIGHT: 68, // D
+            BOTTOM: 83 // S
+        };
+
+        
+
+        const gridGeometry = new THREE.PlaneGeometry(-1000, 1000, 16, 16);
+        const gridMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
+
+        const grid = new THREE.Mesh(gridGeometry, gridMaterial);
+        grid.rotation.x = Math.PI / 2;
+        scene.add(grid);
+
+
+        const material1 = new THREE.LineBasicMaterial( { color: 0xffffff } );
+        const points = [];
+        
+        // len of image_names
+        var len = image_names.length;
+
+        // make a loop
+        for (let i = 0; i < len; i++) {
+            const squareGeometry = new THREE.BoxGeometry(15, 15, 15);
+        const material = new THREE.MeshStandardMaterial({ color: new THREE.Color(1, 1, 1) });
+        const square = new THREE.Mesh(squareGeometry, material);
+        
+
+        const loader = new THREE.TextureLoader();
+        // convert i to sting
+        const iString = i.toString();
+        const texture = loader.load(image_urls[i]);
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        context.font = 'Bold 20px Arial';
+        context.fillStyle = 'rgba(255, 255, 255, 1)';
+        var str = 'HASH 365d773af4fa31fad33 16b9472fd18b03d e300c2d586e0d fe2be31ab4a4b6a70';
+        var a = 30;
+        var b = 30;
+        var lineheight = 30;
+        var lines = str.split(' ');
+        for (var j = 0; j<lines.length; j++)
+        context.fillText(lines[j], a, b + (j*lineheight) );
+        const mainHASH = new THREE.CanvasTexture(canvas);
+        const canvas2 = document.createElement('canvas');
+        const context2 = canvas2.getContext('2d');
+        context2.font = 'Bold 20px Arial';
+        context2.fillStyle = 'rgba(255, 255, 255, 1)';
+        var str = image_names[i]+" "+image_descriptions[i];
+        var a = 30;
+        var b = 30;
+        var lineheight = 30;
+        var lines = str.split(' ');
+        for (var j = 0; j<lines.length; j++)
+        context2.fillText(lines[j], a, b + (j*lineheight) );
+        const mainHASH2 = new THREE.CanvasTexture(canvas2);
+        const canvas3 = document.createElement('canvas');
+        const context3 = canvas3.getContext('2d');
+        context3.fillStyle = 'rgba(255, 255, 255, 1)';
+        var str = 'DHash_c049585d59151e55 wHash_c049585d59151e55 PHash_c049585d59151e55 jHash_c049585d59151e55 ';
+        var a = 30;
+        var b = 30;
+        var lineheight = 30;
+        var lines = str.split(' ');
+        for (var j = 0; j<lines.length; j++)
+        context3.fillText(lines[j], a, b + (j*lineheight) );
+        const mainHASH3 = new THREE.CanvasTexture(canvas3);
+        const canvasColor = document.createElement('canvas');
+        const contextColor = canvasColor.getContext('2d');
+        contextColor.fillStyle = 'rgba(255, 255, 255, 1)';
+        var str = '';
+        var a = 30;
+        var b = 30;
+        var lineheight = 30;
+        var lines = str.split(' ');
+        for (var j = 0; j<lines.length; j++)
+        contextColor.fillText(lines[j], a, b + (j*lineheight) );
+        const mainColor = new THREE.CanvasTexture(canvasColor);
+
+        const materials = [
+            new THREE.MeshBasicMaterial({ map: texture }),
+            new THREE.MeshBasicMaterial({ map: texture }),
+            new THREE.MeshBasicMaterial({ map: mainHASH2 }),
+            new THREE.MeshBasicMaterial({ map: texture }),
+            new THREE.MeshBasicMaterial({ map: mainHASH }),
+            new THREE.MeshBasicMaterial({ map: mainHASH3 }),
+        ];
+        const cube = new THREE.Mesh(squareGeometry, materials);
+        // cube.position.x = i;
+        // cube.position.y = i;
+        // assign random x and y 
+        var x = Math.random() * 10 + 30 * i;
+        var y = Math.random() * 10 + 30 ;
+        cube.position.x = x;
+        cube.position.y = y;
+        points.push( new THREE.Vector3( x, y, 0 ) );
+        const geometry = new THREE.BufferGeometry().setFromPoints( points );
+        const line = new THREE.Line( geometry, material1 );
+        scene.add(line);
+        scene.add(cube);
+        }
+
+        // const light = new THREE.HemisphereLight(0xffffff, 0x333333, 0.7);
+        // scene.add(light);
+
+
+        camera.position.y = 100;
+        camera.position.x = 100;
+        camera.position.z = 100;
+        controls.update();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            
+            
+            // update camera position
+            controls.update();
+
+
+            
+            
+
+            renderer.render(scene, camera);
+            
+            window.addEventListener("keydown", (event) => {
+            // update camera position with WASD
+
+            if (event.keyCode === 65) {
+                camera.position.z -= 0.005;
+                
+
+
+            } else if (event.keyCode === 68) {
+                camera.position.z += 0.005;
+
+            } else if (event.keyCode === 87) {
+                camera.position.x += 0.005;
+
+            } else if (event.keyCode === 83) {
+                camera.position.x -= 0.005;
+            }
+
+            }, true);
+        };
+
+        animate();
+    </script>
+</body>
+
+</html>
