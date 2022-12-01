@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Block Chain Visualization</title>
+    
     <style>
         body {
             margin: 0 !important;
@@ -151,6 +152,22 @@
         // cube.position.x = i;
         // cube.position.y = i;
         // assign random x and y 
+
+        // make a random number either 0 or 1
+        var randomX = Math.floor(Math.random() * 2);
+
+        // if (randomX == 0) {
+        //     var x = Math.random() * 10 + 30 -100;
+        //     var y = Math.random() * 10 + 30 * i;
+        //     cube.position.x = x;
+        //     cube.position.y = y;
+        // } else {
+        //     var x = Math.random() * 10 + 30 * i -100;
+        //     var y = Math.random() * 10 + 30;
+        //     cube.position.x = x;
+        //     cube.position.y = y;
+        // }
+
         var x = Math.random() * 10 + 30 * i -100;
         var y = Math.random() * 10 + 30;
         cube.position.x = x;
@@ -170,6 +187,9 @@
         camera.position.x = 100;
         camera.position.z = 100;
         controls.update();
+
+
+        
 
         function animate() {
             requestAnimationFrame(animate);
@@ -199,6 +219,10 @@
 
             } else if (event.keyCode === 83) {
                 camera.position.z += 0.005;
+            } else if (event.keyCode === 81) {
+                camera.position.y += 0.005;
+            } else if (event.keyCode === 69) {
+                camera.position.y -= 0.005;
             }
 
             }, true);

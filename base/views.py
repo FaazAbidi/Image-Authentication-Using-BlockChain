@@ -141,17 +141,35 @@ def search(request):
         all_blocks = Block.objects.all().filter(Q(whash__icontains=query))
     # type 5 is colorhash
     elif type == 5:
-        all_blocks = Block.objects.all().filter(Q(whash__icontains=query))    
+        all_blocks = Block.objects.all().filter(Q(colorhash__icontains=query))    
     else:
         all_blocks = []
         
     print(type, query)
     print(all_blocks)
     
+    if type==0:
+        criteria="KeyWord"
+    elif type==1:
+        criteria="DHash"
+    elif type==2:
+        criteria="AverageHash"
+    elif type==3:
+        criteria="PHash"
+    elif type==4:
+        criteria="WHash"
+    else:
+        criteria="Color Hash"
+
+
+
+
+
     context = {
             "query" : query,
             "result_count" : len(all_blocks),
-            "all_blocks" : all_blocks
+            "all_blocks" : all_blocks,
+            "type" : criteria
         }
     
     return render(request, 'searchpage.html', context)
